@@ -1,0 +1,33 @@
+Mục tiêu bài toán:
+1. Object cần có:
+ + Book:
+ id: Mã sách
+ title: Tựa đề sách
+ author: Tác giả
+ isBorrowed: Trạng thái sách đã được mượn hay chưa( true || false)
+ + User:
+ id: Mã người dùng
+ name: Tên người dùng
+ borrowedBooks: Danh sách các loại sách đã mượn (Array)
+ + Library:
+ books: Danh sách các loại sách(Array, mỗi sách sẽ là 1 object Book)
+ users: Danh sách người dùng(Array, mỗi user sẽ là 1 object User)
+2. Danh sách các chức năng cần có:
+ + Thêm sách
+ + Xem sách
+ + Xoá sách
+ + Chỉnh sửa sách
+ + Mượn sách
+ + Trả sách
+ + Tìm kiếm
+Flow tổng:
+Start => Khởi tạo Library => Menu(Danh sách các chức năng cần có) => Lặp lại:
+3. Các function cần có:
+ + Thêm sách
+ + Hiển thị danh sách các loại sách
+ + Mượn sách
+ + Tìm sách theo ID sách
+ + Trả sách
+ + Tìm sách theo tên 
+ + Chỉnh sửa sách
+ + Xoá sách

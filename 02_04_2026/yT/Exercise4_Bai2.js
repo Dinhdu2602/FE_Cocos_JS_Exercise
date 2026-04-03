@@ -1,7 +1,7 @@
 function readUnderthousand(num) {
     if(num === 0) return "không";
     const ones = [
-        '',
+        'không',
         'một', 
         'hai',
         'ba',
@@ -60,6 +60,7 @@ function readUndermilion(num){
 console.log(readUndermilion(726503));
 console.log(readUndermilion(6052));
 console.log(readUndermilion(120021));
+console.log(readUndermilion(100001));
 //console.log(readUnderthousand(985));
 //console.log(readUnderthousand(14));
 //console.log(readUnderthousand(44));
