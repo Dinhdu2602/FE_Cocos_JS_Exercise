@@ -46,6 +46,37 @@ function deleteBookFlow() {
         startApp();
     })
 }
+function editBookFlow() {
+    rl.question("Please enter Book ID: ", function(idInput){
+        var id = parseInt(idInput);
+        rl.question("Please enter new title: ", function(newTitle){
+            rl.question("Please enter new author: ", function(newAuthor){
+                var result = libraryService.editBook(library, id, newTitle, newAuthor);
+                console.log(result);
+                startApp();
+            });
+        });
+    });
+}
+function findBookByIdFlow() {
+   rl.question("Please enter Book ID: ", function(idInput){
+        var id = parseInt(idInput);
+        var book = libraryService.findBookById(library, id);
+        if (book === null) {
+            console.log("Book not found. Please try again.");
+        } else {
+            console.log("=== BOOK INFO ===");
+            console.log(
+                "ID: " + book.id +
+                " | Title: " + book.title +
+                " | Author: " + book.author +
+                " | Borrowed: " + book.isBorrowed
+            );
+        }
+        startApp();
+    });
+
+}
 function borrowBookFlow() {
     rl.question("Please enter Book ID: ", function(idInput){
         var id = parseInt(idInput);
@@ -71,6 +102,9 @@ function handleMenu(choice) {
         case "2":
             deleteBookFlow();
             break;
+        case "3":
+            editBookFlow();
+            break;
         case "4":
             libraryService.showBook(library);
             startApp();
@@ -80,6 +114,9 @@ function handleMenu(choice) {
             break;
         case "6":
             returnBookFlow();
+            break;
+        case "7":
+            findBookByIdFlow();
             break;
         case "0":
             console.log("Exit...");
