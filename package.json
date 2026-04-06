@@ -4,7 +4,6 @@
   "description": "Build a simple system to manage books in library. UI appear in console. The system should allow users to:  + Store and manage a collection of books  + Perform basic operations such as adding, searching, updating, and deleting books  + Track the availability status of each book",
   "main": "src/main.ts",
   "scripts": {
-    
     "start": "node src/main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
