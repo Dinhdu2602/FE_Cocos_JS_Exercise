@@ -5,7 +5,7 @@ import * as libraryService from "./services/libraryService.ts";
 import { createIdGenerator }  from "./utils/idGenerator.ts";
 import showMenu  from "./ui/menu.ts";
 import { seedData } from "./data/seed.ts";
-import { MenuOption } from "./types/menuOption.ts";
+//import { MenuOption } from "./types/menuOption.ts";
 import * as readline from "readline";
 import { deleteBook } from "./services/libraryService.ts";
 //import { deleteBook, editBook, findBookById, borrowBook, returnBook } from './services/libraryService';
@@ -113,29 +113,29 @@ function returnBookFlow(): void {
 function handleMenu(choice: string): void {
     const option: number = parseInt(choice);
     switch (option) {
-        case MenuOption.Add:
+        case 1:
             addBookFlow();
             break;
-        case MenuOption.Delete:
+        case 2:
             deleteBookFlow();
             break;
-        case MenuOption.Edit:
+        case 3:
             editBookFlow();
             break;
-        case MenuOption.Show:
+        case 4:
             libraryService.showBook(library);
             startApp();
             break;
-        case MenuOption.Borrow:
+        case 5:
             borrowBookFlow();
             break;
-        case MenuOption.Return:
+        case 6:
             returnBookFlow();
             break;
-        case MenuOption.Find:
+        case 7:
             findBookByIdFlow();
             break;
-        case MenuOption.Exit:
+        case 0:
             console.log("Exit ...");
             rl.close();
             break;
