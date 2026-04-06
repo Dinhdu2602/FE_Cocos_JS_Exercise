@@ -7,7 +7,8 @@ import showMenu  from "./ui/menu.ts";
 import { seedData } from "./data/seed.ts";
 import { MenuOption } from "./types/menuOption.ts";
 import * as readline from "readline";
-import { deleteBook, editBook, findBookById, borrowBook, returnBook } from './services/libraryService.ts';
+import { deleteBook } from "./services/libraryService.ts";
+//import { deleteBook, editBook, findBookById, borrowBook, returnBook } from './services/libraryService';
 const library: Library = new Library();
 
 const generateBookId = createIdGenerator();
