@@ -1,7 +1,7 @@
 {
   "name": "fe_cocos_js_exercise",
   "version": "1.0.0",
-  "description": "",
+  "description": "Build a simple system to manage books in library. UI appear in console. The system should allow users to:  + Store and manage a collection of books  + Perform basic operations such as adding, searching, updating, and deleting books  + Track the availability status of each book",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/Dinhdu2602/FE_Cocos_JS_Exercise/issues"
   },
-  "homepage": "https://github.com/Dinhdu2602/FE_Cocos_JS_Exercise#readme"
+  "homepage": "https://github.com/Dinhdu2602/FE_Cocos_JS_Exercise#readme",
+  "devDependencies": {
+    "typescript": "^6.0.2"
+  }
 }
