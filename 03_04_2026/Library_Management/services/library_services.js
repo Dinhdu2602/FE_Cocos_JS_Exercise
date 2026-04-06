@@ -22,7 +22,7 @@ function deleteBook(library, bookId) {
         return "Delete book success.";
     }
     return "Book not found.";
-}
+}  
 function editBook(library, bookId, newTitle, newAuthor) {
     for(var i = 0; i < library.books.length; i++)
         if (library.books[i].id === bookId){
