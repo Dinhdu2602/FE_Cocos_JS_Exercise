@@ -1,6 +1,6 @@
-## 👕 Clothing Shop Management System
+##  Clothing Shop Management System
 
-# 📌 Requirement
+#  Requirement
  Build a management system for a clothing shop as a web application (not console-based). The system should support multiple roles and handle product management, sales, inventory tracking, and reporting.
  
  The system should allow users to:
@@ -9,7 +9,7 @@
   - Manage orders and sales transactions
   - Track inventory (stock in/out)
   - Generate basic reports (revenue, profit, stock status)
-# 🎯 Objective 
+#  Objective 
 - Practice building a real-world application using JavaScript/TypeScript
 - Understand system design with multiple actors and business flow
 - Apply CRUD operations in a practice scenario
@@ -18,7 +18,7 @@
 - Improve problem-solving and logical thinking
 - Prepare for building larger systems (accounting, analytics)
 
-# 👥 Actors
+#  Actors
 # 1. Owner:
 - Manages the entire system
 - Views reports (revenue, profit, growth)
@@ -32,7 +32,7 @@
 # 3. Customer:
 - Views products
 - Places orders
-# 🧩 Objects
+#  Objects
 ## Auth and User
 1. Account
  - id: string
@@ -198,11 +198,11 @@ day / month / year
  - Monthly trend analysis
  - Peak sales period (Tết, Noel,...)  
 
-## 🚀 Future Improvements (EXPANDED)
+##  Future Improvements (EXPANDED)
  - Dashboard with charts (Chart.js / Recharts)
  - Export report (Excel / PDF)
-Promotion / discount system
-Customer loyalty system (points)
-AI recommendation
+ - Promotion / discount system
+ - Customer loyalty system (points)
+ - AI recommendation
  - Multi-store support
-Real-time notification (low stock)
+ - Real-time notification (low stock)
