@@ -1,4 +1,4 @@
-import { ProductVariant } from "./productVariant.model";
+import type { ProductVariant } from "./productVariant.model";
 
 const variants: ProductVariant[] = [];
 
