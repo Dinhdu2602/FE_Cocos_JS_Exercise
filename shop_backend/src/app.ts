@@ -1,0 +1,14 @@
+import express from 'express';
+import authRoutes from "./modules/auth/auth.route";
+import categoryRoutes from "./modules/category/category.route";
+import productRoutes from "./modules/product/product.route";
+import productVariantRoutes from "./modules/product/productVariant.route";
+import orderRoutes from "./modules/order/order.route";
+const app = express();
+app.use(express.json());
+app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api', productVariantRoutes);
+app.use('/api/orders', orderRoutes);
+export default app;
