@@ -18,7 +18,7 @@
 - Improve problem-solving and logical thinking
 - Prepare for building larger systems (accounting, analytics)
 
-#  Actors
+## Actors
 # 1. Owner:
 - Manages the entire system
 - Views reports (revenue, profit, growth)
@@ -32,8 +32,8 @@
 # 3. Customer:
 - Views products
 - Places orders
-#  Objects
-## Auth and User
+## Objects
+# Auth and User
 1. Account
  - id: string
  - email: string
@@ -49,7 +49,7 @@
  - phone: string
  - address: string 
  - createdAt: Date
-## Product Domain
+# Product Domain
 1. Category:
  - id: string
  - name: string
@@ -75,7 +75,7 @@ Represents a clothing item in shop
  - productId: string
  - url: string
  - isPrimary: boolean
-## OrderDomain
+# OrderDomain
 Represents a customer purchase
 1. Order:
  - id: string
@@ -101,7 +101,7 @@ Represents a customer purchase
  - cartId: string
  - productVariantId: string
  - quantity: number 
-## Inventory Domain
+# Inventory Domain
 Tracks stock movement (import/export)
 1. InventoryLog
  - id: string
@@ -127,7 +127,7 @@ Tracks stock movement (import/export)
  - productVariantId: string
  - quantity: number
  - costPrice: number
-## Accounting Domain (Future Extension)
+# Accounting Domain (Future Extension)
 1. Transaction:
  - id: string
  - type: 'INCOME' | 'EXPENSE'
@@ -198,7 +198,7 @@ day / month / year
  - Monthly trend analysis
  - Peak sales period (Tết, Noel,...)  
 
-##  Future Improvements (EXPANDED)
+#  Future Improvements (EXPANDED)
  - Dashboard with charts (Chart.js / Recharts)
  - Export report (Excel / PDF)
  - Promotion / discount system

@@ -1,4 +1,4 @@
-import { Request, Response} from "express";
+import type { Request, Response} from "express";
 import { ProductVariantService } from "./productVariant.service";
 
 export const createVariant = (req: Request, res: Response) => {
