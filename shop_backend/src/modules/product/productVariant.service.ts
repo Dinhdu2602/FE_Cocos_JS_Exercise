@@ -34,4 +34,27 @@ export const ProductVariantService = {
         variants.splice(index, 1);
         return true;
     },
+
+    deductStock(id: string, quantity: number): ProductVariant | null {
+        const variant = variants.find((v) => v.id === id);
+
+        if(!variant) return null;
+
+        if(variant.stock < quantity) {
+            throw new Error("Insufficient stock");
+        }
+
+        variant.stock -= quantity;
+        return variant;
+    },
+    
+    checkStock(id: string, quantity: number) : boolean {
+        const variant = variants.find((v) => v.id === id);
+
+        if(!variant) {
+            throw new Error("Variant not found.");
+        }
+        
+        return variant.stock >= quantity;
+    }
 };

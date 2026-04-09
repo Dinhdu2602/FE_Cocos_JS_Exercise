@@ -1,9 +1,13 @@
 import type { Order } from "./order.model";
+import { ProductVariantService } from "../product/productVariant.service";
 
 const orders: Order[] = [];
 
 export const OrderService = {
     create(data: Omit<Order, "id" | "createdAt" | "status" | "totalAmount">): Order {
+        data.items.forEach((item) => {
+            ProductVariantService.deductStock(item.variantId, item.quantity);
+        });
         const totalAmount = data.items.reduce(
             (sum, item) => sum + item.price * item.quantity,
             0 

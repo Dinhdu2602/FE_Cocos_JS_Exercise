@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { CategoryService } from "./category.service";
 
 export const createCategory = (req: Request, res: Response) => {
