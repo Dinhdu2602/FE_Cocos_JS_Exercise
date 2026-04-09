@@ -6,8 +6,22 @@ const orders: Order[] = [];
 export const OrderService = {
     create(data: Omit<Order, "id" | "createdAt" | "status" | "totalAmount">): Order {
         data.items.forEach((item) => {
-            ProductVariantService.deductStock(item.variantId, item.quantity);
+            const enoughStock = ProductVariantService.checkStock(
+                item.variantId,
+                item.quantity
+            );
+            if (!enoughStock) {
+                throw new Error("Insufficient stock");
+            }
         });
+        
+        data.items.forEach((item) => {
+            ProductVariantService.deductStock(
+                item.variantId, 
+                item.quantity
+            );
+        });
+        
         const totalAmount = data.items.reduce(
             (sum, item) => sum + item.price * item.quantity,
             0 
