@@ -47,3 +47,9 @@ export const deleteVariant = (req: Request, res: Response) => {
         message: "Delete successfully.",
     });
 };
+
+export const getInventorySummary = (req: Request, res: Response) => {
+    const summary = ProductVariantService.getInventorySummary();
+
+    res.json(summary);
+};

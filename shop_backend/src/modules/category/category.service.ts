@@ -1,25 +1,17 @@
-import type { Category } from "./category.model";
-const categories: Category[] = [];
+import CategoryModel, { type ICategory } from './category.schema';
+
 export const CategoryService = {
-    create(data: Omit<Category, "id">): Category {
-        const newCategory: Category = {
-            id: Date.now().toString(),
-            ...data,
-        };
-        categories.push(newCategory);
-
-        return newCategory;
+    async create(data: Partial<ICategory>): Promise<ICategory> {
+        const created = new CategoryModel(data);
+        return created.save();
     },
-    
-    getAll(): Category[] {
-        return categories;
-    } ,
-    
-    delete(id: string): boolean {
-        const index = categories.findIndex((c) => c.id === id);
 
-        if (index === -1) return false;
-        categories.splice(index, 1);
-        return true;
+    async getAll(): Promise<ICategory[]> {
+        return CategoryModel.find();
+    },
+
+    async delete(id: string): Promise<boolean> {
+        const res = await CategoryModel.findByIdAndDelete(id);
+        return !!res;
     },
 };

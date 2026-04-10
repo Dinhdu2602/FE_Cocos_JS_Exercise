@@ -1,31 +1,26 @@
-import type { Account } from './auth.model';
-const accounts: Account[] = [];
+import AccountModel, { type IAccount } from './auth.schema';
 
 export const AuthService = {
-    register(data: Omit<Account, 'id' | 'createdAt' | 'status' | 'updatedAt' | 'deletedAt'>): Account {
-        const newAccount: Account = {
-            id: crypto.randomUUID(),
-            email: data.email,
-            password: data.password,
-            role: data.role,
-            status: "ACTIVE",
+    async register(data: Partial<IAccount>): Promise<IAccount> {
+        const created = new AccountModel({
+            ...data,
+            status: 'ACTIVE',
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null,
-        };
-        accounts.push(newAccount);
-        return newAccount;
+        });
+        return created.save();
     },
-    login(email: string, password: string): Account | null {
-        const account = accounts.find(
-            acc => acc.email === email && acc.password === password
-        );
+
+    async login(email: string, password: string): Promise<IAccount | null> {
+        const account = await AccountModel.findOne({ email, password });
         if (!account || account.status !== 'ACTIVE') {
             return null;
         }
         return account;
     },
-    getAll() {
-        return accounts;
+
+    async getAll(): Promise<IAccount[]> {
+        return AccountModel.find();
     },
-}
+};

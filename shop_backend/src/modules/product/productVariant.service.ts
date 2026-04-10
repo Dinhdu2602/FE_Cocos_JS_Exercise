@@ -1,60 +1,60 @@
-import type { ProductVariant } from "./productVariant.model";
-
-const variants: ProductVariant[] = [];
+import ProductVariantModel, { type IProductVariant } from './productVariant.schema';
 
 export const ProductVariantService = {
-    create(data: Omit<ProductVariant, "id">): ProductVariant {
-        const newVariant: ProductVariant = {
-            id: crypto.randomUUID().toString(),
-            ...data,
-        };
-        variants.push(newVariant);
-
-        return newVariant;
+    async create(data: Partial<IProductVariant>): Promise<IProductVariant> {
+        const created = new ProductVariantModel(data);
+        return created.save();
     },
 
-    getByProductId(productId: string): ProductVariant[] {
-        return variants.filter((v) => v.productId === productId);
+    async getByProductId(productId: string): Promise<IProductVariant[]> {
+        return ProductVariantModel.find({ productId });
     },
 
-    update(id: string, data: Partial<ProductVariant>): ProductVariant | null {
-        const variant = variants.find((v) => v.id === id);
-        
-        if(!variant) return null;
-
-        Object.assign(variant, data);
-        return variant;
+    async update(id: string, data: Partial<IProductVariant>): Promise<IProductVariant | null> {
+        return ProductVariantModel.findByIdAndUpdate(id, data, { new: true });
     },
 
-    delete(id: string): boolean {
-        const index = variants.findIndex((v) => v.id === id);
-
-        if(index === -1) return false;
-
-        variants.splice(index, 1);
-        return true;
+    async delete(id: string): Promise<boolean> {
+        const res = await ProductVariantModel.findByIdAndDelete(id);
+        return !!res;
     },
 
-    deductStock(id: string, quantity: number): ProductVariant | null {
-        const variant = variants.find((v) => v.id === id);
-
-        if(!variant) return null;
-
-        if(variant.stock < quantity) {
-            throw new Error("Insufficient stock");
+    async deductStock(id: string, quantity: number): Promise<IProductVariant | null> {
+        const variant = await ProductVariantModel.findById(id);
+        if (!variant) return null;
+        if (variant.stock < quantity) {
+            throw new Error('Insufficient stock');
         }
-
         variant.stock -= quantity;
+        await variant.save();
         return variant;
     },
-    
-    checkStock(id: string, quantity: number) : boolean {
-        const variant = variants.find((v) => v.id === id);
 
-        if(!variant) {
-            throw new Error("Variant not found.");
+    async checkStock(id: string, quantity: number): Promise<boolean> {
+        const variant = await ProductVariantModel.findById(id);
+        if (!variant) {
+            throw new Error('Variant not found.');
         }
-        
         return variant.stock >= quantity;
-    }
+    },
+    // ...existing code...
+    async restock(id: string, quantity: number): Promise<IProductVariant | null> {
+        const variant = await ProductVariantModel.findById(id);
+        if (!variant) return null;
+        variant.stock += quantity;
+        await variant.save();
+        return variant;
+    },
+
+    async getInventorySummary() {
+        const totalVariants = await ProductVariantModel.countDocuments();
+        const variants = await ProductVariantModel.find();
+        const totalStock = variants.reduce((sum, variant) => sum + variant.stock, 0);
+        const lowStockCount = variants.filter(variant => variant.stock <= 5).length;
+        return {
+            totalVariants,
+            totalStock,
+            lowStockCount,
+        };
+    },
 };

@@ -1,39 +1,21 @@
-import type { Product } from "./product.model";
-
-const products: Product[] = [];
+import ProductModel, { type IProduct } from './product.schema';
 
 export const ProductService = {
-    create(data: Omit<Product, "id" | "createdAt">): Product {
-        const newProduct: Product = {
-            id: crypto.randomUUID().toString(),
-            createdAt: new Date(),
-            ...data,
-        };
-        products.push(newProduct);
-
-        return newProduct;
+    async create(data: Partial<IProduct>): Promise<IProduct> {
+        const created = new ProductModel(data);
+        return created.save();
     },
 
-    getAll(): Product[] {
-        return products;
+    async getAll(): Promise<IProduct[]> {
+        return ProductModel.find();
     },
 
-    update(id: string, data: Partial<Product>): Product | null {
-        const product = products.find((p) => p.id === id);
-
-        if(!product) return null;
-        Object.assign(product, data);
-
-        return product
+    async update(id: string, data: Partial<IProduct>): Promise<IProduct | null> {
+        return ProductModel.findByIdAndUpdate(id, data, { new: true });
     },
 
-    delete(id: string): boolean {
-        const index = products.findIndex((p) => p.id === id);
-
-        if(index === -1) return false;
-
-        products.splice(index, 1);
-        
-        return true;
+    async delete(id: string): Promise<boolean> {
+        const res = await ProductModel.findByIdAndDelete(id);
+        return !!res;
     },
 };

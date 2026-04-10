@@ -4,6 +4,7 @@ import {
     getVariantsByProduct,
     updateVariant,
     deleteVariant,
+    getInventorySummary,
 
 } from "./productVariant.controller"
 
@@ -17,4 +18,5 @@ router.put("/variants/:id", updateVariant);
 
 router.delete("/variants/:id", deleteVariant);
 
+router.get("/variants/inventory-summary", getInventorySummary);
 export default router;
