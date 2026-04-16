@@ -1,121 +1,164 @@
-
 cc.Class({
     extends: cc.Component,
 
     properties: {
-       charName: "Player Demo",
-       mana: 100,
-       speed: 200,
-       processMana: cc.ProgressBar,
-       labelName: cc.Label,
-       leftButton: cc.Node,
-       rightButton: cc.Node,
+        charName: "Player Demo",
+        mana: 100,
+        speed: 200,
+        processMana: cc.ProgressBar,
+        labelName: cc.Label,
+        leftButton: cc.Node,
+        rightButton: cc.Node,
     },
+
     onLoad() {
         this.currentMana = this.mana;
         this.walkDirection = 0;
         this.currentAnimation = "idle";
-        
-        // Tìm sp.Skeleton component (Spine animation)
+        this.holdTime = 0;
+        this.transitionTime = 0.5;
+
+        // ✅ Lấy skeleton TRƯỚC
         let skeletonComponents = this.node.getComponentsInChildren(sp.Skeleton);
-        
-        
         if (skeletonComponents.length > 0) {
             this.skeletonComponent = skeletonComponents[0];
-        } 
-        
-        // Gán event TOUCH_START/END vào button
+        } else {
+            cc.error("Không tìm thấy Spine!");
+            return;
+        }
+
+        this.originalScaleX = this.skeletonComponent.node.scaleX;
+        this.originalScaleY = this.skeletonComponent.node.scaleY;
+
+        // ✅ Hướng ban đầu (fix player 2)
+       // this.facing = Math.sign(this.originalScaleX) || 1;
+
+        // BUTTON EVENTS
         if (this.rightButton) {
             this.rightButton.off(cc.Node.EventType.TOUCH_START);
             this.rightButton.off(cc.Node.EventType.TOUCH_END);
-            this.rightButton.on(cc.Node.EventType.TOUCH_START, function() { this.onRightButton(true); }.bind(this), this);
-            this.rightButton.on(cc.Node.EventType.TOUCH_END, function() { this.onRightButton(false); }.bind(this), this);
+
+            this.rightButton.on(cc.Node.EventType.TOUCH_START, () => {
+                this.onRightButton(true);
+            }, this);
+
+            this.rightButton.on(cc.Node.EventType.TOUCH_END, () => {
+                this.onRightButton(false);
+            }, this);
         }
-        
+
         if (this.leftButton) {
             this.leftButton.off(cc.Node.EventType.TOUCH_START);
             this.leftButton.off(cc.Node.EventType.TOUCH_END);
-            this.leftButton.on(cc.Node.EventType.TOUCH_START, function() { this.onLeftButton(true); }.bind(this), this);
-            this.leftButton.on(cc.Node.EventType.TOUCH_END, function() { this.onLeftButton(false); }.bind(this), this);
+
+            this.leftButton.on(cc.Node.EventType.TOUCH_START, () => {
+                this.onLeftButton(true);
+            }, this);
+
+            this.leftButton.on(cc.Node.EventType.TOUCH_END, () => {
+                this.onLeftButton(false);
+            }, this);
         }
     },
 
-    start () {
+    start() {
         this.labelName.string = this.charName;
         this.updateManaBar();
     },
+
     updateManaBar() {
         this.processMana.progress = this.currentMana / this.mana;
     },
+
     onLeftButton(isDown) {
         if (isDown) {
             this.walkDirection = -1;
+            this.holdTime = 0;
+            this._updateCharacterScale();
             this._playAnimation("walk");
-            this._singleStep(-1);
         } else {
             if (this.walkDirection === -1) this.walkDirection = 0;
+            this.holdTime = 0;
             this._playAnimation("idle");
         }
     },
+
     onRightButton(isDown) {
         if (isDown) {
             this.walkDirection = 1;
+            this.holdTime = 0;
+            this._updateCharacterScale();
             this._playAnimation("walk");
-            this._singleStep(1);
         } else {
             if (this.walkDirection === 1) this.walkDirection = 0;
+            this.holdTime = 0;
             this._playAnimation("idle");
         }
     },
-    // Các hàm click đơn giản để gán vào Click Events trong Cocos Creator
-    onLeftClick() {
-        if (this.currentMana <= 0) return;
-        this._singleStep(-1);
-    },
-    onRightClick() {
-        if (this.currentMana <= 0) return;
-        this._singleStep(1);
-    },
-    // Di chuyển 1 bước nhỏ khi nhấn nhanh
+
     _singleStep(direction) {
         if (this.currentMana <= 0) return;
+
         let pos = this.node.position;
-        pos.x += direction * this.speed * 0.08; // đi 1 bước nhỏ (0.08s)
-        this._playAnimation("walk");
+
+    
+        pos.x += direction * this.speed * 0.08;
+
         this.node.setPosition(pos);
-        let manaCost = 10 * 0.08; // tăng mana cost (từ 5 lên 10)
-        this.currentMana -= manaCost;
+        this._playAnimation("walk");
+
+        this.currentMana -= 10 * 0.08;
         if (this.currentMana < 0) this.currentMana = 0;
+
         this.updateManaBar();
     },
-    // Hàm update gọi mỗi frame - xử lý nhấn giữ di chuyển mượt mà
+
     update(dt) {
         if (this.walkDirection !== 0 && this.currentMana > 0) {
-            // Play animation run khi đang giữ nút
-            this._playAnimation("run");
-            
+            this.holdTime += dt;
+
+            if (this.holdTime >= this.transitionTime) {
+                this._playAnimation("run");
+            } else {
+                this._playAnimation("walk");
+            }
+
             let pos = this.node.position;
-            pos.x += this.walkDirection * this.speed * dt;
+
+        
+           pos.x += this.walkDirection * this.speed * dt;
+
             if (pos.x > 730) pos.x = 730;
             if (pos.x < -700) pos.x = -700;
+
             this.node.setPosition(pos);
-            let manaCost = 10 * dt; // trừ mana khi nhấn giữ
-            this.currentMana -= manaCost;
+
+            this.currentMana -= 10 * dt;
             if (this.currentMana < 0) {
                 this.currentMana = 0;
                 this.node.active = false;
             }
+
             this.updateManaBar();
         }
     },
-    
-    // Hàm chạy animation (dùng sp.Skeleton - Spine)
+
+    _updateCharacterScale() {
+        if (this.walkDirection === 0 || !this.skeletonComponent) return;
+
+        let absScaleX = Math.abs(this.originalScaleX);
+
+        this.skeletonComponent.node.scaleX =
+            absScaleX * this.walkDirection;
+
+        this.skeletonComponent.node.scaleY = this.originalScaleY;
+    },
+
     _playAnimation(animName) {
         if (!this.skeletonComponent) return;
-        if (this.currentAnimation === animName) return; // tránh play liên tục cùng animation
-        
-        this.skeletonComponent.setAnimation(0, animName, true); // loop = true
+        if (this.currentAnimation === animName) return;
+
+        this.skeletonComponent.setAnimation(0, animName, true);
         this.currentAnimation = animName;
-    }
-    // update (dt) {},
+    },
 });

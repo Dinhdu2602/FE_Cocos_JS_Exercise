@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "64d1c0c5-bf1c-4b3c-8646-ffa9dbc35993",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 20,
+  "height": 44,
+  "platformSettings": {},
+  "subMetas": {
+    "Slider_Border_EdgeDeco_03_Demo_Fill": {
+      "ver": "1.0.6",
+      "uuid": "8e52179b-6495-4405-8003-0bf97f6f9a90",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "64d1c0c5-bf1c-4b3c-8646-ffa9dbc35993",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 20,
+      "height": 44,
+      "rawWidth": 20,
+      "rawHeight": 44,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
