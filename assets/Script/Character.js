@@ -15,10 +15,11 @@ cc.Class({
         this.currentMana = this.mana;
         this.walkDirection = 0;
         this.currentAnimation = "idle";
+        // Used to detect hold → run transition
         this.holdTime = 0;
         this.transitionTime = 0.5;
-
-        // ✅ Lấy skeleton TRƯỚC
+        
+        // Get Spine component (must exist, otherwise movement/animation breaks)
         let skeletonComponents = this.node.getComponentsInChildren(sp.Skeleton);
         if (skeletonComponents.length > 0) {
             this.skeletonComponent = skeletonComponents[0];
@@ -26,14 +27,13 @@ cc.Class({
             cc.error("Không tìm thấy Spine!");
             return;
         }
-
+        
+        // Store original scale to avoid squash when flipping
         this.originalScaleX = this.skeletonComponent.node.scaleX;
         this.originalScaleY = this.skeletonComponent.node.scaleY;
 
-        // ✅ Hướng ban đầu (fix player 2)
-       // this.facing = Math.sign(this.originalScaleX) || 1;
 
-        // BUTTON EVENTS
+        // Bind input events (mobile touch)
         if (this.rightButton) {
             this.rightButton.off(cc.Node.EventType.TOUCH_START);
             this.rightButton.off(cc.Node.EventType.TOUCH_END);
@@ -115,6 +115,8 @@ cc.Class({
 
     update(dt) {
         if (this.walkDirection !== 0 && this.currentMana > 0) {
+
+            // Holding input long enough switches from walk → run
             this.holdTime += dt;
 
             if (this.holdTime >= this.transitionTime) {
@@ -125,14 +127,16 @@ cc.Class({
 
             let pos = this.node.position;
 
-        
-           pos.x += this.walkDirection * this.speed * dt;
+            // Movement must NOT depend on scale (avoid reversed controls)
+            pos.x += this.walkDirection * this.speed * dt;
 
+            // Clamp position within bounds 
             if (pos.x > 730) pos.x = 730;
             if (pos.x < -700) pos.x = -700;
 
             this.node.setPosition(pos);
 
+            // Drain mana over time while movingmoving
             this.currentMana -= 10 * dt;
             if (this.currentMana < 0) {
                 this.currentMana = 0;
@@ -148,14 +152,18 @@ cc.Class({
 
         let absScaleX = Math.abs(this.originalScaleX);
 
+        // Flip ONLY the Spine node to avoid flipping UI (label, bar)
         this.skeletonComponent.node.scaleX =
             absScaleX * this.walkDirection;
 
+        // Preserve Y scale to prevent squash/stretch 
         this.skeletonComponent.node.scaleY = this.originalScaleY;
     },
 
     _playAnimation(animName) {
         if (!this.skeletonComponent) return;
+        
+        // Prevent restarting the same animation every frame (performance + jitter)
         if (this.currentAnimation === animName) return;
 
         this.skeletonComponent.setAnimation(0, animName, true);
