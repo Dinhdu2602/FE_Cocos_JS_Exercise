@@ -1,5 +1,7 @@
 {
-  "excludeScenes": [],
+  "excludeScenes": [
+    "2d2f792f-a40c-49bb-a189-ed176a246e49"
+  ],
   "orientation": {
     "landscapeLeft": true,
     "landscapeRight": true,
@@ -7,7 +9,7 @@
     "upsideDown": false
   },
   "packageName": "org.cocos2d.helloworld",
-  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "startScene": "bb84ade7-0ee1-4041-928c-d4f826f9ba2a",
   "title": "hello_world",
   "webOrientation": "auto",
   "inlineSpriteFrames": true,

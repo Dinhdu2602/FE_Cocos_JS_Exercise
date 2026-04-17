@@ -8,10 +8,10 @@
   "group-list": [
     "default"
   ],
-  "start-scene": "bb84ade7-0ee1-4041-928c-d4f826f9ba2a",
+  "start-scene": "02cf9c9b-4883-4c4e-8b33-ee8e8562adfa",
   "design-resolution-width": 1560,
   "design-resolution-height": 720,
-  "fit-width": false,
+  "fit-width": true,
   "fit-height": true,
   "use-project-simulator-setting": false,
   "simulator-orientation": false,

@@ -64,8 +64,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -500,
-        -150,
+        -460.174,
+        -166.896,
         0,
         0,
         0,
@@ -168,7 +168,7 @@
     ],
     "paused": false,
     "defaultSkin": "default",
-    "defaultAnimation": "",
+    "defaultAnimation": "idle",
     "_preCacheMode": 0,
     "_cacheMode": 0,
     "loop": true,
@@ -179,7 +179,7 @@
     "_frameCache": null,
     "_curFrame": null,
     "_skeletonCache": null,
-    "_animationName": "",
+    "_animationName": "idle",
     "_animationQueue": [],
     "_headAniInfo": null,
     "_playTimes": 0,
@@ -619,12 +619,15 @@
     "_enabled": true,
     "charName": "Player Demo",
     "mana": 100,
+    "speed": 200,
     "processMana": {
       "__id__": 10
     },
     "labelName": {
       "__id__": 13
     },
+    "leftButton": null,
+    "rightButton": null,
     "_id": ""
   },
   {
