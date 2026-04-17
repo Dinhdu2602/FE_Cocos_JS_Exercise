@@ -1,6 +1,6 @@
 # Deep Research Docx for Exercise 16-04-2026:
- + Exercise 1: [Deep Research about Cache Mode of Label Component](#label-cache-mode---cocos-creator-2L)
- + Exercise 2: [Deep Research about Life Cycle of Component](#life-cycle-of-component--cocos-creator-li)
+ + Exercise 1: [Deep Research about Cache Mode of Label Component](#label-cache-mode---cocos-creator-24)
+ + Exercise 2: [Deep Research about Life Cycle of Component](#life-cycle-of-component--cocos-creator-24)
 ---------
 # LABEL CACHE MODE - COCOS CREATOR 2.4
 ## 1. Thông tin:
