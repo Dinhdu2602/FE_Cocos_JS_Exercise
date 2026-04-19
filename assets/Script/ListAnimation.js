@@ -1,5 +1,4 @@
-
-
+import mEventEmitter from "./EventEmitter";
 cc.Class({
     extends: cc.Component,
 
@@ -19,7 +18,6 @@ cc.Class({
      
     start() {
         const animations = this.spine._skeleton.data.animations;
-        console.log(animations);
 
         for (let anim = 0; anim < animations.length; anim++) {
             let item = this.loadAnimButton(animations[anim].name);
@@ -30,7 +28,10 @@ cc.Class({
     loadAnimButton(name) {
         let button = cc.instantiate(this.itemPrefab);
         button.getComponentInChildren(cc.Label).string = name;
-        console.log(button.getChildByName("Background"));
+        //console.log(button.getChildByName("Background"));
+        button.on("click", () => {
+            mEventEmitter.instance.emit("PLAY_ANIM", name);
+        });
         return button;
     }
     // update (dt) {},
