@@ -5,25 +5,65 @@ cc.Class({
     properties: {
         spineNode: cc.Node,
         animation: cc.Animation,
+        timelineClip: "CharacterAnimationClip" 
+    },
+    onLoad() {
+        this.defaultState = {
+            position: this.spineNode.position.clone(),
+            scaleX: this.spineNode.scaleX,
+            scaleY: this.spineNode.scaleY,
+            angel: this.spineNode.angel,
+        };
     },
 
+    stopAll() {
+        this.spineNode.setPosition(this.defaultState.position);
+        this.spineNode.scaleX = this.defaultState.scaleX;
+        this.spineNode.scaleY = this.defaultState.scaleY;
+        this.spineNode.setRotation(0);
+        if (this.animation) {
+            this.animation.stop();
+        }
+
+        cc.Tween.stopAllByTarget(this.spineNode);
+        this.spineNode.stopAllActions();
+    },
+        
+
     onClickTween() {
+        this.stopAll();
         cc.tween(this.spineNode)
-            .to(0.5, { scale: 1.5 })
-            .to(0.5, { scale: 1 })
+            .to(0.3, { scale: 1.3, y: 20}, { easing: "quadOut"})
+            .to(0.2, { scale: 1, y: 0}, {easing: "bounceOut"})
             .start();
     },
 
     onClickRunAction() {
-        let action = cc.sequence(
-            cc.scaleTo(0.5, 1.5),
-            cc.scaleTo(0.5, 1)
-        );
+    this.stopAll();
 
-        this.spineNode.runAction(action);
+    let jumpUp = cc.moveBy(0.2, cc.v2(0, 60)).easing(cc.easeCubicActionOut());
+    let fallDown = cc.moveBy(0.3, cc.v2(0, -60)).easing(cc.easeBounceOut());
+
+    let scaleUp = cc.scaleTo(0.2, 1.3);
+    let scaleDown = cc.scaleTo(0.3, 1);
+
+    let rotate = cc.rotateBy(0.6, 360);
+
+    
+
+    let action = cc.sequence(
+        cc.spawn(jumpUp, scaleUp),   
+        cc.spawn(fallDown, scaleDown, rotate)
+    );
+
+    this.spineNode.runAction(action);
     },
 
     onClickTimeline() {
-        this.animation.play("your_clip_name");
+        this.stopAll();
+        let action = this.animation;
+        
+        this.animation.wrapMode = cc.WrapMode.Loop;
+        action.play(this.timelineClip);
     }
 });

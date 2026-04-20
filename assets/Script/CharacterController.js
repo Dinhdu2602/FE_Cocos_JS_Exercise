@@ -27,5 +27,9 @@ cc.Class({
     resetState() {
         this.spine.clearTracks();
         this.spine.setToSetupPose();
+    },
+
+    onClickDisableSelf() {
+        this.node.active = false;
     }
 });

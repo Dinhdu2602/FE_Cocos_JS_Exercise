@@ -28,7 +28,6 @@ cc.Class({
     loadAnimButton(name) {
         let button = cc.instantiate(this.itemPrefab);
         button.getComponentInChildren(cc.Label).string = name;
-        //console.log(button.getChildByName("Background"));
         button.on("click", () => {
             mEventEmitter.instance.emit("PLAY_ANIM", name);
         });

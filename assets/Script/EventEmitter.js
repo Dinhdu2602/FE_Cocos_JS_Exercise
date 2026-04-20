@@ -19,17 +19,17 @@ class mEventEmitter {
         }
     }
 
-    // removeAllEvents(owner) {
-    //     if (!this.listenerMap.has(owner)) return;
+    removeAllEvents(owner) {
+        if (!this.listenerMap.has(owner)) return;
 
-    //     const listeners = this.listenerMap.get(owner);
+        const listeners = this.listenerMap.get(owner);
 
-    //     listeners.forEach(({ eventName, method }) => {
-    //         this.eventEmitter.off(eventName, method, owner);
-    //     });
+        listeners.forEach(({ eventName, method }) => {
+            this.eventEmitter.off(eventName, method, owner);
+        });
 
-    //     this.listenerMap.delete(owner);
-    // }
+        this.listenerMap.delete(owner);
+    }
 }
 
 mEventEmitter.instance = new mEventEmitter();
