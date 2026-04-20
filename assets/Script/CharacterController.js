@@ -7,7 +7,8 @@ cc.Class({
         spine: sp.Skeleton,
     },
 
-    onEnable() {
+    onLoad() {
+        mEventEmitter.instance.removeAllEvents(this);
         mEventEmitter.instance.registerEvent(
             "PLAY_ANIM",
             this.playAnim,
@@ -20,6 +21,7 @@ cc.Class({
     },
 
     playAnim(animName) {
+        this.spine.setAnimation(0, animName, true);
         this.resetState();
         this.spine.setAnimation(0, animName, true);
     },
@@ -29,7 +31,7 @@ cc.Class({
         this.spine.setToSetupPose();
     },
 
-    onClickDisableSelf() {
-        this.node.active = false;
-    }
+   onClickRemoveAllEvents() {
+        mEventEmitter.instance.removeAllEvents(this);
+   },
 });

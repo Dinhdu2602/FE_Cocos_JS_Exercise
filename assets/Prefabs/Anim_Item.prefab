@@ -43,7 +43,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 325,
       "height": 40
     },
     "_anchorPoint": {
@@ -114,7 +114,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 350,
+      "width": 325,
       "height": 50
     },
     "_anchorPoint": {
@@ -171,14 +171,14 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 0,
+      "g": 0,
+      "b": 0,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 325,
       "height": 40
     },
     "_anchorPoint": {
@@ -275,7 +275,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "68193cf5-9cca-40e5-aadc-0c179aec0f5c"
+      "__uuid__": "e254a88a-10a4-48b8-a3bf-56ce43bf3dc4"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -302,8 +302,8 @@
     "alignMode": 0,
     "_target": null,
     "_alignFlags": 45,
-    "_left": -125,
-    "_right": -125,
+    "_left": 0,
+    "_right": 0,
     "_top": -5,
     "_bottom": -5,
     "_verticalCenter": 0,
@@ -389,19 +389,19 @@
       "a": 200
     },
     "_N$normalSprite": {
-      "__uuid__": "68193cf5-9cca-40e5-aadc-0c179aec0f5c"
+      "__uuid__": "e254a88a-10a4-48b8-a3bf-56ce43bf3dc4"
     },
     "_N$pressedSprite": {
-      "__uuid__": "7d4c60da-92a0-4347-ad43-465f314b0533"
+      "__uuid__": "68193cf5-9cca-40e5-aadc-0c179aec0f5c"
     },
     "pressedSprite": {
-      "__uuid__": "7d4c60da-92a0-4347-ad43-465f314b0533"
+      "__uuid__": "68193cf5-9cca-40e5-aadc-0c179aec0f5c"
     },
     "_N$hoverSprite": {
-      "__uuid__": "e254a88a-10a4-48b8-a3bf-56ce43bf3dc4"
+      "__uuid__": "7d4c60da-92a0-4347-ad43-465f314b0533"
     },
     "hoverSprite": {
-      "__uuid__": "e254a88a-10a4-48b8-a3bf-56ce43bf3dc4"
+      "__uuid__": "7d4c60da-92a0-4347-ad43-465f314b0533"
     },
     "_N$disabledSprite": {
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
@@ -419,7 +419,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 2,
     "_target": null,
     "_alignFlags": 1,
     "_left": 0,

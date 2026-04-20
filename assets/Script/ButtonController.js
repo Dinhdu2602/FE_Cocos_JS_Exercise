@@ -12,21 +12,20 @@ cc.Class({
             position: this.spineNode.position.clone(),
             scaleX: this.spineNode.scaleX,
             scaleY: this.spineNode.scaleY,
-            angel: this.spineNode.angel,
+            angle: this.spineNode.angle,
         };
     },
 
     stopAll() {
-        this.spineNode.setPosition(this.defaultState.position);
-        this.spineNode.scaleX = this.defaultState.scaleX;
-        this.spineNode.scaleY = this.defaultState.scaleY;
-        this.spineNode.setRotation(0);
         if (this.animation) {
             this.animation.stop();
         }
 
         cc.Tween.stopAllByTarget(this.spineNode);
         this.spineNode.stopAllActions();
+        this.spineNode.setScale(1, 1);
+        this.spineNode.angle = 0;
+        this.spineNode.y = this.defaultState.position.y;
     },
         
 
@@ -39,24 +38,24 @@ cc.Class({
     },
 
     onClickRunAction() {
-    this.stopAll();
+        this.stopAll();
 
-    let jumpUp = cc.moveBy(0.2, cc.v2(0, 60)).easing(cc.easeCubicActionOut());
-    let fallDown = cc.moveBy(0.3, cc.v2(0, -60)).easing(cc.easeBounceOut());
+        let jumpUp = cc.moveBy(0.2, cc.v2(0, 60)).easing(cc.easeCubicActionOut());
+        let fallDown = cc.moveBy(0.3, cc.v2(0, -60)).easing(cc.easeBounceOut());
 
-    let scaleUp = cc.scaleTo(0.2, 1.3);
-    let scaleDown = cc.scaleTo(0.3, 1);
+        let scaleUp = cc.scaleTo(0.2, 1.3);
+        let scaleDown = cc.scaleTo(0.3, 1);
 
-    let rotate = cc.rotateBy(0.6, 360);
+        let rotate = cc.rotateBy(0.6, 360);
 
     
 
-    let action = cc.sequence(
-        cc.spawn(jumpUp, scaleUp),   
-        cc.spawn(fallDown, scaleDown, rotate)
-    );
+        let action = cc.sequence(
+            cc.spawn(jumpUp, scaleUp),   
+            cc.spawn(fallDown, scaleDown, rotate)
+        );
 
-    this.spineNode.runAction(action);
+        this.spineNode.runAction(action);
     },
 
     onClickTimeline() {

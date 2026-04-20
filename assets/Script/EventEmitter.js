@@ -7,6 +7,7 @@ class mEventEmitter {
     emit(eventName, data) {
         this.eventEmitter.emit(eventName, data);
     }
+    
 
     registerEvent(eventName, method, owner) {
         this.eventEmitter.on(eventName, method, owner);
@@ -15,7 +16,7 @@ class mEventEmitter {
             if (!this.listenerMap.has(owner)) {
                 this.listenerMap.set(owner, []);
             }
-            this.listenerMap.get(owner).push({ eventName, method });
+            this.listenerMap.get(owner).push({ eventName, method});
         }
     }
 
