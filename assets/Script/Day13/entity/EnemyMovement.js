@@ -16,6 +16,10 @@ cc.Class({
     },
 
     update(dt) {
+        this.move(dt);
+    },
+
+    move(dt) {
         this.node.y += this.direction * this.speed * dt;
 
         const upper = this.startY + this.range;
@@ -25,6 +29,4 @@ cc.Class({
             this.direction *= -1;
         }
     },
-
-    // update (dt) {},
 });

@@ -1,12 +1,24 @@
 {
   "collision-matrix": [
     [
+      false,
       true
+    ],
+    [
+      true,
+      false
+    ],
+    [
+      false,
+      false,
+      false
     ]
   ],
   "excluded-modules": [],
   "group-list": [
-    "default"
+    "Bullet",
+    "Enemy",
+    "Character"
   ],
   "start-scene": "71fed04a-02de-40da-ba18-6b3548e407ff",
   "design-resolution-width": 1560,
