@@ -3,7 +3,7 @@ const EventEmitter = new cc.EventTarget();
 const EVENT = {
     SHOOT: "shoot",
     SPAWN_BULLET: "spawn_bullet",
-    HIT_MONSTER: "hit_monster",
+    HIT_ENEMY: "hit_enemy",
 };
 
 export default {

@@ -1,33 +1,137 @@
-import Event from "../core/EventEmitter_Core";
-
+const Event = require("../core/EventEmitter_Core");
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        speed: 200,
-    },
+  properties: {
+    speed: 200,
+    enableLog: true,
 
-    onLoad() {
-        this.manager = this.node.parent.getComponent("CharacterManager");
-        this.characterId = this.manager.registerCharacter(this.node);
+    minX: -670,
+    maxX: -400,
+    minY: -350,
+    maxY: 120,
+  },
 
-        Event.on(Event.EVENT.SHOOT, this.onShoot, this);
-    },
+  onLoad() {
+    this.initializeCharacter();
+    this.registerEvent();
 
-    onShoot() {
-        this.shoot();
-    },
+    // Event.on(Event.EVENT.SHOOT, this.onShoot, this);
+  },
 
-    shoot() {
-        const worldPos = this.node.parent.convertToWorldSpaceAR(this.node.position);
+  onDestroy() {
+    this.unregisterEvent();
+  },
 
-        Event.emit(Event.EVENT.SPAWN_BULLET, {
-            shooterId: this.characterId,
-            worldPos: worldPos
-        });
-    },
+  initializeCharacter() {
+    this.manager = this.getCharacterManager();
 
-    onDestroy() {
-        Event.off(Event.EVENT.SHOOT, this.onShoot, this);
+    if (!this.manager) {
+      this.logWarning("CharacterManager not found.");
+      return;
     }
+
+    this.characterId = this.manager.registerCharacter(this.node);
+    this.directionX = 0;
+    this.directionY = 0;
+  },
+
+  registerEvent() {
+    Event.on(Event.EVENT.SHOOT, this.onShoot, this);
+
+    Event.on("MOVE_UP", this.onMoveUp, this);
+    Event.on("MOVE_DOWN", this.onMoveDown, this);
+    Event.on("MOVE_LEFT", this.onMoveLeft, this);
+    Event.on("MOVE_RIGHT", this.onMoveRight, this);
+
+    Event.on("STOP_MOVE_X", this.onStopMoveX, this);
+    Event.on("STOP_MOVE_Y", this.onStopMoveY, this);
+  },
+
+  unregisterEvent() {
+    Event.off(Event.EVENT.SHOOT, this.onShoot, this);
+
+    Event.off("MOVE_UP", this.onMoveUp, this);
+    Event.off("MOVE_DOWN", this.onMoveDown, this);
+    Event.off("MOVE_LEFT", this.onMoveLeft, this);
+    Event.off("MOVE_RIGHT", this.onMoveRight, this);
+
+    Event.off("STOP_MOVE_X", this.onStopMoveX, this);
+    Event.off("STOP_MOVE_Y", this.onStopMoveY, this);
+  },
+
+  onMoveUp() {
+    this.directionY = 1;
+  },
+  onMoveDown() {
+    this.directionY = -1;
+  },
+
+  onMoveLeft() {
+    this.directionX = -1;
+  },
+  onMoveRight() {
+    this.directionX = 1;
+  },
+
+  onStopMoveX() {
+    this.directionX = 0;
+  },
+  onStopMoveY() {
+    this.directionY = 0;
+  },
+
+  getCharacterManager() {
+    return this.node.parent.getComponent("CharacterManager");
+  },
+
+  onShoot() {
+    cc.log(">>> Shoot Event Received.");
+    this.handleShootRequest();
+  },
+
+  handleShootRequest() {
+    const worldPosition = this.getWorldPosition();
+    this.emitSpawnBullet(worldPosition);
+  },
+
+  getWorldPosition() {
+    return this.node.convertToWorldSpaceAR(cc.v2(0, 0));
+  },
+
+  emitSpawnBullet(worldPosition) {
+    this.log("Emit SPAWN_BULLET.");
+    Event.emit(Event.EVENT.SPAWN_BULLET, {
+      shooterId: this.characterId,
+      worldPosition: worldPosition,
+    });
+  },
+
+  handleMovement(dt) {
+    if (this.directionX === 0 && this.directionY === 0) return;
+
+    let newX = this.node.x + this.directionX * this.speed * dt;
+    let newY = this.node.y + this.directionY * this.speed * dt;
+
+    newX = this.clamp(newX, this.minX, this.maxX);
+    newY = this.clamp(newY, this.minY, this.maxY);
+
+    this.node.setPosition(newX, newY);
+  },
+
+  clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  },
+
+  update(dt) {
+    this.handleMovement(dt);
+  },
+  log(message) {
+    if (!this.enableLog) return;
+    cc.log("[Character] " + message);
+  },
+
+  logWarning(message) {
+    cc.warn("[Character WARNING] " + message);
+  },
 });

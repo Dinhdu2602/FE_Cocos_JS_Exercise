@@ -1,25 +1,31 @@
-import Event from "./EventEmitter_Core";
+const Event = require("./EventEmitter_Core");
 
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        characterLayer: cc.Node,
-        bulletLayer: cc.Node,
-        enemyLayer: cc.Node,
-    },
+  properties: {
+    characterLayer: cc.Node,
+    bulletLayer: cc.Node,
+    enemyLayer: cc.Node,
+  },
 
-    onLoad() {
-        window.Game = this; 
-    },
+  onLoad() {
+    this.enemyManager = this.enemyLayer.getComponent("EnemyManager");
+    window.Game = this;
+  },
 
-    start() {
-        this.initManagers();
-    },
+  getFirstEnemy() {
+    return this.enemyManager.getFirstEnemy();
+  },
 
-    initManagers() {
-        this.characterManager = this.characterLayer.getComponent("CharacterManager");
-        this.bulletManager = this.bulletLayer.getComponent("BulletManager");
-        this.monsterManager = this.enemyLayer.getComponent("MonsterManager");
-    }
+  start() {
+    this.initManagers();
+  },
+
+  initManagers() {
+    this.characterManager =
+    this.characterLayer.getComponent("CharacterManager");
+    this.bulletManager = this.bulletLayer.getComponent("BulletManager");
+    this.enemyManager = this.enemyLayer.getComponent("EnemyManager");
+  },
 });

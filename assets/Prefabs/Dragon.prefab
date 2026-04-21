@@ -31,10 +31,13 @@
     "_components": [
       {
         "__id__": 15
+      },
+      {
+        "__id__": 16
       }
     ],
     "_prefab": {
-      "__id__": 16
+      "__id__": 17
     },
     "_opacity": 255,
     "_color": {
@@ -555,6 +558,18 @@
       "width": 182.7,
       "height": 128.1
     },
+    "_id": ""
+  },
+  {
+    "__type__": "d86ceA7VKpBTIUYcpr7fIr4",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "speed": 50,
+    "range": 200,
     "_id": ""
   },
   {

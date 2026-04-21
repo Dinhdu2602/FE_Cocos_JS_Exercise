@@ -1,11 +1,14 @@
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    getAllMonster() {
-        return this.node.children;
-    },
+  getAllEnemy() {
+    return this.node.children;
+  },
 
-    getFirstMonster() {
-        return this.node.children[0];
+  getFirstEnemy() {
+    if (!this.node || this.node.children.length === 0) {
+      return null;
     }
+    return this.node.children[0];
+  },
 });
