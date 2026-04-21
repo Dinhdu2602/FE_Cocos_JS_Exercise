@@ -587,7 +587,9 @@
     "hpBar": {
       "__id__": 10
     },
-    "damageLabelPrefab": null,
+    "damageLabel": {
+      "__id__": 13
+    },
     "_id": ""
   },
   {

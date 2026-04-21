@@ -12,9 +12,9 @@ cc.Class({
   onLoad() {
     this.enemyManager = this.enemyLayer.getComponent("EnemyManager");
     window.Game = this;
-    // const manager = cc.director.getCollisionManager();
-    // manager.enabled = true;
-    // manager.enabledDebugDraw = true; 
+    const manager = cc.director.getCollisionManager();
+    manager.enabled = true;
+    //manager.enabledDebugDraw = true; 
   },
 
   getFirstEnemy() {

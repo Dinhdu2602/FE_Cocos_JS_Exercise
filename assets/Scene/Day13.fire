@@ -2359,7 +2359,9 @@
     "hpBar": {
       "__id__": 57
     },
-    "damageLabelPrefab": null,
+    "damageLabel": {
+      "__id__": 60
+    },
     "_id": "23fQFttmRBkrSdi+lT9GTt"
   },
   {

@@ -5,7 +5,7 @@ cc.Class({
     properties: {
         maxHp: 100,
         hpBar: cc.ProgressBar,
-        damageLabelPrefab: cc.Prefab,
+        damageLabel: cc.Label,
     },  
 
     // LIFE-CYCLE CALLBACKS:
@@ -32,23 +32,32 @@ cc.Class({
     },
 
     showDamage(damage) {
-        if (!this.damageLabelPrefab) return;
+    if (!this.damageLabel) return;
 
-        const node = cc.instantiate(this.damageLabelPrefab);
-        node.setPosition(this.node.position);
-        this.node.parent.addChild(node);
+    const node = this.damageLabel.node;
 
-        const label = node.getComponent(cc.Label);
-        label.string = "-" + damage;
+    node.stopAllActions();
+    node.active = true;
+    node.opacity = 255;
 
-        node.runAction(
-            cc.sequence(
-                cc.moveBy(0.5, cc.v2(0, 50)),
-                cc.fadeOut(0.3),
-                cc.callFunc(() => node.destroy())
-            )
-        );
-    },
+    this.damageLabel.string = "-" + damage;
+
+    const offsetX = Math.random() * 40 - 20;
+
+    node.setPosition(cc.v2(0, 50));
+
+    node.runAction(
+        cc.sequence(
+            cc.spawn(
+                cc.moveBy(0.5, cc.v2(0, 60)),
+                cc.fadeOut(0.5)
+            ),
+            cc.callFunc(() => {
+                node.active = false;
+            })
+        )
+    );
+},
     
     die() {
         this.node.destroy();

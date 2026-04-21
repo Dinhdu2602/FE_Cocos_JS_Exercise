@@ -33,7 +33,6 @@ cc.Class({
   },
 
   onCollisionEnter(other, self) {
-    cc.log("Bullet hit!");
 
     const enemy = other.node.getComponent("EnemyHealth");
     if (!enemy) return;
