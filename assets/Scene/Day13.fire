@@ -970,6 +970,7 @@
     "_enabled": true,
     "speed": 200,
     "enableLog": true,
+    "currentBulletType": "axe",
     "minX": -670,
     "maxX": -400,
     "minY": -350,
@@ -1710,7 +1711,13 @@
     "_enabled": true,
     "bulletPrefabs": [
       {
+        "__uuid__": "c678555a-59a9-45f0-af0f-179e097be4e8"
+      },
+      {
         "__uuid__": "76383eab-0753-4c51-9f90-3315d2fe8a25"
+      },
+      {
+        "__uuid__": "800235fa-ed67-466b-b351-8a3556ab7180"
       }
     ],
     "_id": "a4VRnAD6dBV73V1KY7MoGy"

@@ -9,7 +9,13 @@ cc.Class({
     this.initializeSpeed(data);
     this.initializeDirection(data);
 
-    cc.log("[Bullet] Init with direction:", this.direction);
+    this.damage = data.damage || 0;
+
+    cc.log("[Bullet] Init:", {
+        speed: this.speed,
+        damage: this.damage,
+        direction: this.direction
+    });
   },
 
   initializeSpeed(data) {
@@ -37,7 +43,7 @@ cc.Class({
     const enemy = other.node.getComponent("EnemyHealth");
     if (!enemy) return;
 
-    enemy.takeDamage(10);
+    enemy.takeDamage(this.damage);
 
     this.node.destroy();
   },

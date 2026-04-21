@@ -1,5 +1,5 @@
 const Event = require("../core/EventEmitter_Core");
-
+const { BULLET_CONFIG } = require("../core/GameDefine");
 cc.Class({
   extends: cc.Component,
 
@@ -9,43 +9,48 @@ cc.Class({
 
   onLoad() {
     Event.on(Event.EVENT.SPAWN_BULLET, this.onSpawnBullet, this);
+
+    this.bulletPrefabMap = {
+      axe: this.bulletPrefabs[0],
+      eye: this.bulletPrefabs[1],
+      fish: this.bulletPrefabs[2],
+    };
   },
 
   onSpawnBullet(data) {
-    const localPos = this.convertWorldToLocalPosition(data.worldPosition);
+    const localPosition = this.convertWorldToLocalPosition(data.worldPosition);
 
-    const bulletNode = this.createBulletNode();
+    const bulletNode = this.createBulletNode(data.bulletType);
     if (!bulletNode) return;
 
-    bulletNode.setPosition(localPos);
+    bulletNode.setPosition(localPosition);
     this.node.addChild(bulletNode);
 
-    this.initializeBullet(bulletNode);
+    this.initializeBullet(bulletNode, data.bulletType);
   },
   convertWorldToLocalPosition(worldPosition) {
     return this.node.convertToNodeSpaceAR(worldPosition);
   },
 
-  createBulletNode() {
-    if (!this.bulletPrefabs || this.bulletPrefabs.length === 0) {
-      cc.error("Bullet prefab is missing!");
+  createBulletNode(type) {
+    const prefab = this.bulletPrefabMap[type];
+
+    if (!prefab) {
+      cc.error("Prefab is missing type:", type);
       return null;
     }
 
-    return cc.instantiate(this.bulletPrefabs[0]);
+    return cc.instantiate(prefab);
   },
-  initializeBullet(bulletNode) {
+  initializeBullet(bulletNode, type) {
     const bullet = bulletNode.getComponent("Bullet");
     if (!bullet) return;
-
-    const direction = this.getShootDirection();
-    // const target = this.getTargetEnemy();
-    // if (!target) return;
-    // const direction = this.calculateDirection(bulletNode, target);
+    const config = BULLET_CONFIG[type];
 
     bullet.init({
-      direction: direction,
-      speed: 300,
+      direction: this.getShootDirection(),
+      speed: config.speed,
+      damage: config.damage,
     });
   },
 

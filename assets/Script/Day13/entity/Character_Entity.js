@@ -5,6 +5,7 @@ cc.Class({
   properties: {
     speed: 200,
     enableLog: true,
+    currentBulletType: "axe",
 
     minX: -670,
     maxX: -400,
@@ -38,6 +39,7 @@ cc.Class({
 
   registerEvent() {
     Event.on(Event.EVENT.SHOOT, this.onShoot, this);
+    Event.on("CHANGE_BULLET", this.onChangeBullet, this);
 
     Event.on("MOVE_UP", this.onMoveUp, this);
     Event.on("MOVE_DOWN", this.onMoveDown, this);
@@ -81,12 +83,15 @@ cc.Class({
     this.directionY = 0;
   },
 
+  onChangeBullet(type) {
+  this.currentBulletType = type;
+  this.log("Switch Bullet Type: " + type);
+},
   getCharacterManager() {
     return this.node.parent.getComponent("CharacterManager");
   },
 
   onShoot() {
-    cc.log(">>> Shoot Event Received.");
     this.handleShootRequest();
   },
 
@@ -100,10 +105,10 @@ cc.Class({
   },
 
   emitSpawnBullet(worldPosition) {
-    this.log("Emit SPAWN_BULLET.");
     Event.emit(Event.EVENT.SPAWN_BULLET, {
       shooterId: this.characterId,
       worldPosition: worldPosition,
+      bulletType: this.currentBulletType,
     });
   },
 
