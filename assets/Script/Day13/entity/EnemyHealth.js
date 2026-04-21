@@ -1,37 +1,42 @@
-
+const ENEMY_CONFIG = require("../core/GameDefine").ENEMY_CONFIG;
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        maxHp: 100,
-        hpBar: cc.ProgressBar,
-        damageLabel: cc.Label,
-    },  
+  properties: {
+    enemyType: "small",
+    maxHp: 0,
+    hpBar: cc.ProgressBar,
+    damageLabel: cc.Label,
+  },
 
-    // LIFE-CYCLE CALLBACKS:
+  // LIFE-CYCLE CALLBACKS:
 
-    onLoad () {
-        this.currentHp = this.maxHp;
-        this.updateHpBar();
-    },
+  onLoad() {
+    const config = ENEMY_CONFIG[this.enemyType];
+    if (config) {
+      this.maxHp = config.hp;
+    }
+    this.currentHp = this.maxHp;
+    this.updateHpBar();
+  },
 
-    takeDamage(damage) {
-        this.currentHp -=damage;
+  takeDamage(damage) {
+    this.currentHp -= damage;
 
-        this.updateHpBar();
-        this.showDamage(damage);
+    this.updateHpBar();
+    this.showDamage(damage);
 
-        if (this.currentHp <= 0) {
-            this.die();
-        }
-    },
+    if (this.currentHp <= 0) {
+      this.die();
+    }
+  },
 
-    updateHpBar() {
-        if (!this.hpBar) return;
-        this.hpBar.progress = this.currentHp / this.maxHp;
-    },
+  updateHpBar() {
+    if (!this.hpBar) return;
+    this.hpBar.progress = this.currentHp / this.maxHp;
+  },
 
-    showDamage(damage) {
+  showDamage(damage) {
     if (!this.damageLabel) return;
 
     const node = this.damageLabel.node;
@@ -47,19 +52,16 @@ cc.Class({
     node.setPosition(cc.v2(0, 50));
 
     node.runAction(
-        cc.sequence(
-            cc.spawn(
-                cc.moveBy(0.5, cc.v2(0, 60)),
-                cc.fadeOut(0.5)
-            ),
-            cc.callFunc(() => {
-                node.active = false;
-            })
-        )
+      cc.sequence(
+        cc.spawn(cc.moveBy(0.5, cc.v2(0, 60)), cc.fadeOut(0.5)),
+        cc.callFunc(() => {
+          node.active = false;
+        }),
+      ),
     );
-},
-    
-    die() {
-        this.node.destroy();
-    }
+  },
+
+  die() {
+    this.node.destroy();
+  },
 });
