@@ -16,9 +16,20 @@ cc.Class({
   onLoad() {
     this.initializeCharacter();
     this.registerEvent();
-
+    this.initSpine();
     // Event.on(Event.EVENT.SHOOT, this.onShoot, this);
   },
+
+  initSpine() {
+  this.spine = this.getComponentInChildren(sp.Skeleton);
+
+  if (!this.spine) {
+    cc.warn("Spine not found!");
+    return;
+  }
+
+  this.spine.setAnimation(0, "hoverboard", true); 
+},
 
   onDestroy() {
     this.unregisterEvent();
